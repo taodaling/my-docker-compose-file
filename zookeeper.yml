@@ -5,13 +5,15 @@ services:
     image: elkozmon/zoonavigator-web:latest
     container_name: zoonavigator-web
     ports:
-     - "8001:8000"
+     - 8001:8000
     environment:
-      API_HOST: "api"
+      API_HOST: api
       API_PORT: 9000
     depends_on:
      - api
     restart: always
+    networks: 
+      - zknet
   api:
     image: elkozmon/zoonavigator-api:latest
     container_name: zoonavigator-api
@@ -20,7 +22,8 @@ services:
     depends_on:
      - zoo1
     restart: always
-    
+    networks: 
+      - zknet    
   zoo1:
     image: zookeeper
     restart: always
@@ -30,7 +33,8 @@ services:
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
-
+    networks: 
+      - zknet
   zoo2:
     image: zookeeper
     restart: always
@@ -40,7 +44,8 @@ services:
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
-
+    networks: 
+      - zknet
   zoo3:
     image: zookeeper
     restart: always
@@ -50,3 +55,8 @@ services:
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    networks: 
+      - zknet
+      
+networks:
+  zknet:
