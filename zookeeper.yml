@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.0"
 
 services:
   web:
@@ -30,6 +30,9 @@ services:
     hostname: zoo1
     ports:
       - 2181:2181
+    volumes:
+      - zoo1_data:/data
+      - zoo1_log:/datalog
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
@@ -41,6 +44,9 @@ services:
     hostname: zoo2
     ports:
       - 2182:2181
+    volumes:
+      - zoo2_data:/data
+      - zoo2_log:/datalog      
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
@@ -52,6 +58,9 @@ services:
     hostname: zoo3
     ports:
       - 2183:2181
+    volumes:
+      - zoo3_data:/data
+      - zoo3_log:/datalog      
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
@@ -60,3 +69,11 @@ services:
       
 networks:
   zknet:
+
+volumes:
+  zoo1_data:
+  zoo1_log:
+  zoo2_data:
+  zoo2_log:
+  zoo3_data:
+  zoo3_log:
