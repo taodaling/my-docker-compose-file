@@ -1,0 +1,8 @@
+version: "3"
+services:
+    shadowsocks_server:
+        image: oddrationale/docker-shadowsocks
+        container_name: shadowsocks_server
+        ports:
+            - "1080:1080"
+        command: "-s 0.0.0.0 -p 1080 -k password -m aes-256-cfb"
