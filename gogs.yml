@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+ gogs:
+  image: gogs/gogs
+  ports:
+   - "9002:22"
+   - "9003:3000"
+  volumes:
+   - gogs-data:/data
+  environment:
+  - SSH_DOMAIN:localhost
+  - SSH_PORT:9002
+  
+volumes:
+ gogs-data:
